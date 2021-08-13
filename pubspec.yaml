@@ -1,7 +1,7 @@
 name: flutter_custom_text_input_formatter
 description: text input formatter
 version: 0.0.1
-homepage:
+homepage: https://github.com/lazyee/flutter_custom_text_input_formatter.git
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
