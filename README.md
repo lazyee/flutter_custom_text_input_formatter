@@ -1,15 +1,14 @@
 # flutter_custom_text_input_formatter
 
 ```dart
-class CustomTextInputFormatter {
-  static List<TextInputFormatter> getDoubleFormatter({double? maxValue}) => [
-        _DoubleTextInputFormatter(maxValue: maxValue),
-        FilteringTextInputFormatter.allow(RegExp('[1234567890.]'))
-      ];
-
-  static List<TextInputFormatter> getIntFormatter({double? maxValue}) => [
-        _IntTextInputFormatter(maxValue: maxValue),
-        FilteringTextInputFormatter.allow(RegExp('[1234567890]'))
-      ];
-}
+TextField(
+      decoration: InputDecoration(
+          hintText: 'please input...', border: InputBorder.none),
+      inputFormatters: CustomTextInputFormatter.getDoubleFormatter(),
+      //inputFormatters: CustomTextInputFormatter.getDoubleFormatter(maxValue:50),
+      //inputFormatters: CustomTextInputFormatter.getIntFormatter(),
+      //inputFormatters: CustomTextInputFormatter.getIntFormatter(maxValue:50),
+    );
 ```
+
+![](https://raw.githubusercontent.com/lazyee/ImageHosting/master/img/og5j4-ewxxd.gif)
