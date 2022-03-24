@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
@@ -86,7 +85,7 @@ class _DoubleTextInputFormatter extends _BaseTextInputFormatter {
 
     int selectionIndex = newValue.selection.end;
 
-    if (oldText == '0') {
+    if (oldText == '0' && newText != "0." && newText != '') {
       newText = newText.substring(1, newText.length);
     } else if (newText == ".") {
       newText = "0.";
