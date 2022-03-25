@@ -68,6 +68,10 @@ class _DoubleTextInputFormatter extends _BaseTextInputFormatter {
   double? maxValue;
   _DoubleTextInputFormatter({this.maxValue}) : super(maxValue: maxValue);
 
+  static String removeAllIllegalChar(String str) {
+    return str.replaceAll(RegExp("([^0-9.]+)"), "");
+  }
+
   static String? strToFloat(String str) {
     RegExp regexp = RegExp('^([0-9]+(.[0-9]{0,2})?)');
     if (regexp.hasMatch(str)) {
@@ -82,14 +86,24 @@ class _DoubleTextInputFormatter extends _BaseTextInputFormatter {
       TextEditingValue oldValue, TextEditingValue newValue) {
     String oldText = oldValue.text;
     String newText = newValue.text;
+    if (newText.indexOf(".") != newText.lastIndexOf(".")) {
+      newText = oldText;
+    }
 
-    int selectionIndex = newValue.selection.end;
-
-    if (oldText == '0' && newText != "0." && newText != '') {
+    TextSelection textSelection = newValue.selection;
+    if (oldText.startsWith("0") &&
+        newText.startsWith("0") &&
+        !newText.startsWith("0.")) {
+      newText = newText.substring(1, newText.length);
+    } else if (oldText.length > 0 &&
+        newText.startsWith("0") &&
+        !newText.startsWith("0.")) {
       newText = newText.substring(1, newText.length);
     } else if (newText == ".") {
       newText = "0.";
+      textSelection = new TextSelection.collapsed(offset: newText.length);
     } else {
+      newText = removeAllIllegalChar(newText);
       String? newStr = strToFloat(newText);
       if (newStr != null) {
         newText = newStr;
@@ -97,12 +111,10 @@ class _DoubleTextInputFormatter extends _BaseTextInputFormatter {
     }
 
     newText = checkMaxValue(newText);
-    selectionIndex = newText.length;
 
     return new TextEditingValue(
-      text: newText,
-      selection: new TextSelection.collapsed(offset: selectionIndex),
-    );
+        text: newText,
+        selection: newText == oldText ? oldValue.selection : textSelection);
   }
 }
 
@@ -117,18 +129,35 @@ class _IntTextInputFormatter extends _BaseTextInputFormatter {
     String oldText = oldValue.text;
     String newText = newValue.text;
 
-    int selectionIndex = newValue.selection.end;
-
-    if (oldText == '0') {
-      newText = newText.substring(1, newText.length);
+    if (oldText.startsWith("0") && newText.startsWith("0")) {
+      if (newText == "0.") {
+        newText = "0";
+      } else {
+        newText = newText.substring(1, newText.length);
+      }
     }
 
     newText = checkMaxValue(newText);
-    selectionIndex = newText.length;
-
-    return new TextEditingValue(
-      text: newText,
-      selection: new TextSelection.collapsed(offset: selectionIndex),
-    );
+    return new TextEditingValue(text: newText, selection: newValue.selection);
   }
 }
+
+// int _getSelectionIndex(String newText, String oldText) {
+//   if (newText.length < oldText.length) {
+//     for (int i = 0; i < newText.length; i++) {
+//       if (newText.codeUnitAt(i) != oldText.codeUnitAt(i)) {
+//         return i;
+//       }
+//     }
+//   } else {
+//     for (int i = 0; i < oldText.length; i++) {
+//       if (newText.length <= i) {
+//         return i;
+//       }
+//       if (oldText.codeUnitAt(i) != newText.codeUnitAt(i)) {
+//         return i + 1;
+//       }
+//     }
+//   }
+//   return newText.length;
+// }

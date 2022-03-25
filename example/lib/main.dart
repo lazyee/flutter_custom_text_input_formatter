@@ -97,11 +97,19 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TextField(
-              decoration: InputDecoration(
-                  hintText: 'please input...', border: InputBorder.none),
+              decoration: const InputDecoration(
+                  hintText: 'please input float', border: InputBorder.none),
               inputFormatters: CustomTextInputFormatter.getDoubleFormatter(),
               //inputFormatters: CustomTextInputFormatter.getDoubleFormatter(maxValue:50),
               //inputFormatters: CustomTextInputFormatter.getIntFormatter(),
+              //inputFormatters: CustomTextInputFormatter.getIntFormatter(maxValue:50),
+            ),
+            TextField(
+              decoration: const InputDecoration(
+                  hintText: 'please input int', border: InputBorder.none),
+              // inputFormatters: CustomTextInputFormatter.getDoubleFormatter(),
+              //inputFormatters: CustomTextInputFormatter.getDoubleFormatter(maxValue:50),
+              inputFormatters: CustomTextInputFormatter.getIntFormatter(),
               //inputFormatters: CustomTextInputFormatter.getIntFormatter(maxValue:50),
             )
           ],
