@@ -99,7 +99,8 @@ class _MyHomePageState extends State<MyHomePage> {
             TextField(
               decoration: const InputDecoration(
                   hintText: 'please input float', border: InputBorder.none),
-              inputFormatters: CustomTextInputFormatter.getDoubleFormatter(),
+              inputFormatters:
+                  CustomTextInputFormatter.getDoubleFormatter(maxValue: 50),
               //inputFormatters: CustomTextInputFormatter.getDoubleFormatter(maxValue:50),
               //inputFormatters: CustomTextInputFormatter.getIntFormatter(),
               //inputFormatters: CustomTextInputFormatter.getIntFormatter(maxValue:50),
@@ -109,7 +110,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   hintText: 'please input int', border: InputBorder.none),
               // inputFormatters: CustomTextInputFormatter.getDoubleFormatter(),
               //inputFormatters: CustomTextInputFormatter.getDoubleFormatter(maxValue:50),
-              inputFormatters: CustomTextInputFormatter.getIntFormatter(),
+              inputFormatters:
+                  CustomTextInputFormatter.getIntFormatter(maxValue: 50),
               //inputFormatters: CustomTextInputFormatter.getIntFormatter(maxValue:50),
             )
           ],
